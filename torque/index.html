@@ -27,7 +27,7 @@
             center:new google.maps.LatLng(30.95940879245423, -0.609375),
             zoom:2,
             mapTypeId:google.maps.MapTypeId.SATELLITE,
-            mapTypeControl:false,
+            disableDefaultUI: true,
             minZoom:1
         });
 
@@ -104,7 +104,5 @@
 </head>
 <body onload="initialize()">
     <div id="map_canvas"></div>
-    <div class="torque_time"></div>
-    <a class="cartodb_logo" href="http://www.cartodb.com" target="_blank">CartoDB</a>
 </body>
 </html>
