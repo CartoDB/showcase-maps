@@ -494,3 +494,4 @@ function start() {
 
   loop();
 }
+start();

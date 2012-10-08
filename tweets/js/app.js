@@ -20,9 +20,9 @@ function start() {
   requestAnimFrame(animloop);
 
   try {
+    //setTimeout( function() { map.invalidateSize(true); }, 1000);
     map.panBy([.2, 0]);
-    map.invalidateSize();
-    //$(".map").css("height", $(".map").css("height"));
+    //$(".map").css("height", $(".map").css("height")) ;
   } catch(e) {
 
   }
