@@ -5,7 +5,7 @@
     <title>ATM's coverage map</title>
     <meta name="description" content="">
     <meta name="author" content="">
-    <style>body,html {width:100%; height:100%; margin:0; padding:0; overflow:hidden;} #map_canvas {position:absolute; top:40px; left:0; right:0; bottom:0;}</style>
+    <style>body,html {width:100%; height:100%; margin:0; padding:0; overflow:hidden;} #map_canvas {position:absolute; top:0px; left:0; right:0; bottom:0;}</style>
     <link rel="stylesheet" href="css/leaflet.css" />
     <!--[if IE]><link rel="stylesheet" href="../css/leaflet.ie.css" /><![endif]-->
     <link  href="css/cartodb-leaflet.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,7 @@
     	var votes, map;
 
   	  function initialize() {
-  			map = new L.Map('map_canvas').setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
+        map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
 
         var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/saleiva.map-ri1pkhit/{z}/{x}/{y}.png',
             mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
