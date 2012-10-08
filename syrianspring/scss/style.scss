@@ -1,0 +1,223 @@
+@import "compass";
+@import "compass/reset";
+@import "compass/css3";
+@import "helpers";
+
+html, body { width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden; background: #242424; }
+body { font-family: "Helvetica", Arial, sans-serif; }
+
+#map { width: 100%; height: 100%; }
+
+.cartodb_logo, aside, #graph, #progress, #counters {
+  @include opacity(0);
+}
+
+.cartodb_logo {
+
+  @include size(69px, 27px);
+  @include position(false, false, 15px, 15px);
+
+  background:url('http://cartodb.s3.amazonaws.com/embed/embed_sprite.png') no-repeat -61px 0;
+
+  text-indent:-9999px;
+}
+
+aside {
+
+  $padding: 20px;
+
+  @include size(207px - $padding*2, false);
+  @include position(15px, false, false, 15px);
+
+  padding: $padding;
+
+  background: #fff;
+
+  @include border-radius(5px);
+
+  h1 {
+    margin: 0 0 16px 0;
+
+    font-size: 21px;
+    font-weight: bold;
+  }
+
+  #clock {
+    margin: 0 0 10px 0;
+
+    font-size: 15px;
+    font-weight: bold;
+    color: $cGray3;
+  }
+
+  .graph_container {
+    position:relative;
+  }
+
+  #counters {
+    margin: 0 0 15px 0;
+    width: 163px;
+
+    li {
+      @include inline-block();
+      width: 49px;
+
+      border-right: 1px dotted #ccc;
+
+      text-align: right;
+
+      font-size: 15px;
+      font-weight: bold;
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+
+      &.civilians { padding-right: 3px; text-align: left; color: #FFA900; }
+      &.children  { color: #FF3366; text-align: center; }
+      &.total     { float:right; padding-right: 0; border: none; color: #333333; }
+    }
+  }
+
+  #spinner {
+    @include size(24px);
+    @include position(45px, false, false, 70px);
+    background: url(../img/spinner.gif) no-repeat;
+  }
+
+  #graph {
+
+    position:relative;
+    height: 120px;
+    margin: 0 0 15px 0;
+
+    overflow: hidden;
+
+    background: transparent;
+    border-top: 1px solid $cGray4;
+
+    z-index: 100;
+  }
+
+  #progress {
+
+    @include size(1px, 120px);
+    @include position(false, false, 0, 0);
+
+    background: url(../img/line.png);
+
+    span {
+      @include position(47px, false, false, -13px);
+
+      padding: 4px 8px;
+      background:rgba(0,0,0,.5);
+
+      @include border-radius(3px);
+      text-align: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight:bold;
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+    }
+  }
+
+  #play {
+
+    $width: 107px;
+    $height: 64px;
+
+    @include absolute-center($width, $height);
+    @include icons-sprite(play);
+
+    &:hover  { @include icons-sprite(play_hover);}
+    &:hover:active { @include icons-sprite(play_active); }
+
+    &.hidden { display: none; }
+
+    &.pause {
+      @include icons-sprite(pause);
+
+      &:hover  { @include icons-sprite(pause_hover);}
+      &:hover:active { @include icons-sprite(pause_active); }
+    }
+
+  }
+
+  .legend {
+
+    li {
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      font-size: 13px;
+      color: $cGray1;
+
+      padding: 0 0 0 13px;
+      margin: 0 0 3px 0;
+
+      &.civilians { @include icons-sprite(bullet-yellow, $offset-y: 3px); }
+      &.children  { @include icons-sprite(bullet-pink,   $offset-y: 3px); }
+      &.total     { @include icons-sprite(bullet-black,   $offset-y: 3px); }
+    }
+  }
+}
+
+.source {
+
+  @include position(false, 0, 0, false);
+  padding: 6px 12px;
+  background: #333;
+  background:rgba(0,0,0,.75);
+
+  color: #999;
+  font-size:12px;
+  font-family: "Helvetica", Arial, sans-serif;
+
+  @include border-radius(3px 3px 0 0);
+
+  a {
+    text-decoration: none;
+
+    color: #999;
+    font-size:12px;
+    font-family: "Helvetica", Arial, sans-serif;
+
+    -webkit-transition: color 250ms ease-in-out;
+    -moz-transition:    color 250ms ease-in-out;
+    -o-transition:      color 250ms ease-in-out;
+    transition:         color 250ms ease-in-out;
+
+    &:hover { color: #ccc; }
+  }
+}
+
+/* Zoom */
+
+#zoom {
+
+  $zoomWidth: 43px;
+  $zoomHeight: 36px; // distance from the top of the canvas until the middle line
+
+  @include position(10px, 10px, false, false);
+
+  $url: "../img/map-zoom.png";
+
+  z-index: 1000;
+
+  .zoom_in,
+  .zoom_out { display:block; position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }
+
+  .zoom_in {
+    background: transparent url($url) no-repeat 0 0;
+    &:hover  { background: transparent url($url) no-repeat -1*$zoomWidth 0; }
+    &:active { background: transparent url($url) no-repeat -2*$zoomWidth 0; }
+  }
+
+  .zoom_out {
+    background: transparent url($url) no-repeat 0 -1*$zoomHeight;
+    &:hover  { background: transparent url($url) no-repeat -1*$zoomWidth -1*$zoomHeight; }
+    &:active { background: transparent url($url) no-repeat -2*$zoomWidth -1*$zoomHeight; }
+  }
+}
+
+
+// Tell the SVG path to be a thin blue line without any area fill
+path {stroke-width: 1;fill: none;}
+
+.data1 {stroke: #FF9900;}
+.data2 {stroke: #eb0d4d;}

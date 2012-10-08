@@ -1,0 +1,11 @@
+java -jar bin/compiler.jar --js \
+       js/libs/d3.v2.min.js \
+       js/libs/jquery.min.js \
+       js/libs/underscore-min.js \
+       js/libs/backbone-min.js \
+       js/libs/backbone.cartodb.js \
+       js/libs/class.js \
+       js/libs/modestmaps.js \
+       js/helpers.js \
+       js/app.js \
+       --js_output_file js/all.js 
