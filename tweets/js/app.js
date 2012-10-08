@@ -21,6 +21,7 @@ function start() {
 
   try {
     map.panBy([.2, 0]);
+    $(".map").css("height", $(".map").css("height"));
   } catch(e) {
 
   }
