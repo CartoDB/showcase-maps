@@ -18,12 +18,6 @@
           <body onload="initMap();">
             <div id="map"></div>
 
-            <div id="zoom"><div id="zoom_controls">
-                <a class="zoom_in" onclick="zoomIn();"></a>
-                <a class="zoom_out" onclick="zoomOut();"></a>
-              </div>
-            </div>
-
             <aside class="fadeIn">
 
             <h1>Syria deaths</h1>
@@ -48,20 +42,7 @@
               <li id="counter_total" class="total">0</li>
             </ul>
 
-            <ul class="legend">
-              <li class="civilians">adult deaths</li>
-              <li class="children">child deaths <span style="font-size:9px;color:#888;"><18 yrs</span></li>
-              <li class="total">total</li>
-            </ul>
-
             </aside>
-
-            <a class="cartodb_logo slowFadeIn" href="http://www.cartodb.com" target="_blank">CartoDB</a>
-
-            <div class="source">
-              <a target="_blank" href="http://www.syrianshuhada.com">Data source: Syrianshuhada.com</a> &mdash; 
-              <a target="_blank" href="http://www.mapbox.com">Basemap: Mapbox</a>
-            </div>
 
             <!--<script src="js/libs/d3.v2.min.js"></script>-->
             <!--<script src="js/libs/jquery.min.js"></script>-->
@@ -75,19 +56,6 @@
             <script type="text/javascript" src="query.json"></script>
             <script type="text/javascript" src="js/all.js"></script>
 
-            <script type="text/javascript">
-
-               var _gaq = _gaq || [];
-               _gaq.push(['_setAccount', 'UA-20934186-6']);
-               _gaq.push(['_trackPageview']);
-
-               (function() {
-                   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-               })();
-
-          </script>
 
         </body>
       </html>
