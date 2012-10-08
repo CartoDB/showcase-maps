@@ -9,7 +9,7 @@ window.requestAnimFrame = (function(){
   window.oRequestAnimationFrame      ||
   window.msRequestAnimationFrame     ||
   function( callback ){
-    window.setTimeout(callback, 1000 / 40);
+    window.setTimeout(callback, 1000 / 60);
   };
 })();
 
@@ -21,7 +21,8 @@ function start() {
 
   try {
     map.panBy([.2, 0]);
-    $(".map").css("height", $(".map").css("height"));
+    map.invalidateSize();
+    //$(".map").css("height", $(".map").css("height"));
   } catch(e) {
 
   }
