@@ -405,6 +405,8 @@ function initMap() {
   conflictmaps.bind('reset', onDataLoaded);
   conflictmaps.fetch();
 
+  start();
+
 }
 
 // onDataLoaded callback
@@ -499,4 +501,4 @@ function start() {
 
   loop();
 }
-start();
+
