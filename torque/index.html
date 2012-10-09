@@ -16,6 +16,7 @@
     <script type="text/javascript" src="lib/backbone.js"></script>
     <script type="text/javascript" src="lib/class.js"></script>
     <script type="text/javascript" src="lib/backbone.cartodb.js"></script>
+    <script src="lib/h5utils.js"></script>
     <script type="text/javascript" src="src/canvas_tile_layer.js"></script>
     <script type="text/javascript" src="src/grid_layer.js"></script>
     <script type="text/javascript" src="src/torque.js"></script>
@@ -29,6 +30,12 @@
           mapTypeId:google.maps.MapTypeId.SATELLITE,
           disableDefaultUI: true,
           minZoom:1
+        });
+
+        google.maps.event.addListenerOnce(map, 'idle', function(){
+          setTimeout(function() {
+            parent.postMessage("DONE!", "*");
+          }, 1000);
         });
 
         var map_style = {};
