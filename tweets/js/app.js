@@ -19,28 +19,16 @@ var n = (new Date()).getTime();
 
 function start() {
 
+  setTimeout(function() {
+    parent.postMessage("DONE!", "*");
+  }, 3000);
+
   (function animloop(){
-
-    requestAnimFrame(animloop);
-
-    now     = (new Date()).getTime();
-    elapsed	= Math.round((now - n) / 1000);
-
 
     try {
       map.panBy([.1, 0]);
     } catch(e) { }
 
-    if (elapsed > 10) {
-
-      setTimeout(function() {
-        console.log('sending…');
-        parent.postMessage("DONE!", "*");
-      }, 3000);
-
-
-
-    }
 
   })();
 
