@@ -13,22 +13,23 @@ window.requestAnimFrame = (function(){
   };
 })();
 
-var now, elapsed;
-var n = (new Date()).getTime();
-
-
 function start() {
 
   setTimeout(function() {
     parent.postMessage("DONE!", "*");
-  }, 3000);
+  }, 1000);
 
   (function animloop(){
 
-    try {
-      map.panBy([.1, 0]);
-    } catch(e) { }
+    requestAnimFrame(animloop);
 
+    try {
+
+      map.panBy([.1, 0]);
+
+    } catch(e) {
+
+    }
 
   })();
 
