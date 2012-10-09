@@ -47,8 +47,7 @@ function initialize() {
 
   mapbox.on("load", function() {
     if (!started) {
-    started = true;
-      console.log('start');
+      started = true;
       start();
     }
   });
