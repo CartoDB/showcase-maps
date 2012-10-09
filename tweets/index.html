@@ -17,28 +17,9 @@
 
     <script type="text/javascript">
 
-      function initialize() {
-        map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -92.98828125), 4);
-
-        var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/saleiva.map-ri1pkhit/{z}/{x}/{y}.png',
-        mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
-        map.addLayer(mapbox,true);
-
-        var query="SELECT * FROM election_tweet_copy";
-
-        votes = new L.CartoDBLayer({
-          map: map,
-          user_name:'osm2',
-          table_name: 'election_tweet_copy',
-          query: query,
-          auto_bound: false
-        });
-
-        map.addLayer(votes)
-      }
     </script>
   </head>
-  <body onload="initialize()">
+  <body>
     <div id="map_canvas"></div>
   </body>
 </html>
