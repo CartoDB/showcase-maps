@@ -1,3 +1,4 @@
+started = false;
 map = null;
 frames = [];
 
@@ -45,8 +46,11 @@ function initialize() {
   map.addLayer(mapbox,true);
 
   mapbox.on("load", function() {
-    console.log('start');
-    start();
+    if (!started) {
+    started = true;
+      console.log('start');
+      start();
+    }
   });
 
   var query="SELECT * FROM election_tweet_copy";
