@@ -493,6 +493,7 @@ function start() {
   progressLine.className = "fadeIn";
 
   setTimeout(function() {
+    console.log('sending…');
     parent.postMessage("Message received! ", "*");
   }, 1000);
 
