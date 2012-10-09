@@ -496,8 +496,8 @@ function start() {
 
   setTimeout(function() {
     console.log('sending…');
-    parent.postMessage("Message received! ", "*");
-  }, 1000);
+    parent.postMessage("DONE!", "*");
+  }, 3000);
 
   loop();
 }
