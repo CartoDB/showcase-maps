@@ -16,17 +16,17 @@
     <script type="text/javascript" src="dist/cartodb-popup-min.js"></script> 
 
     <script type="text/javascript">
-    	var votes, map;
+      var votes, map;
 
-  	  function initialize() {
+      function initialize() {
         map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
 
         var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/saleiva.map-ri1pkhit/{z}/{x}/{y}.png',
-            mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
+        mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
         map.addLayer(mapbox,true);
 
-    		var query="SELECT * FROM osm_atm_mad_iso";
-          
+        var query="SELECT * FROM osm_atm_mad_iso";
+
         votes = new L.CartoDBLayer({
           map: map,
           user_name:'osm2',
@@ -36,8 +36,11 @@
         });
 
         map.addLayer(votes)
-  	  }
+      }
     </script>
+    <style type="text/css">
+      body { background:#000; }
+    </style>
   </head>
   <body onload="initialize()">
     <div id="map_canvas"></div>
