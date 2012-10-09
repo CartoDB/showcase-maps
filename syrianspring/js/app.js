@@ -492,6 +492,10 @@ function start() {
   progressLine = document.getElementById('progress');
   progressLine.className = "fadeIn";
 
+  setTimeout(function() {
+    parent.postMessage("Message received! " + e.data,"*");
+  }, 1000);
+
   loop();
 }
 start();
