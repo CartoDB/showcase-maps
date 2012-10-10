@@ -14,16 +14,32 @@
     <script type="text/javascript" src="js/wax.leaf.min.js"></script>
     <script type="text/javascript" src="dist/cartodb-leaflet-min.js"></script>
     <script type="text/javascript" src="dist/cartodb-popup-min.js"></script> 
+    <script src="js/h5utils.js"></script>
 
     <script type="text/javascript">
-      var votes, map;
+      var votes, map, started;
 
       function initialize() {
         map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
 
+
         var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/saleiva.map-ri1pkhit/{z}/{x}/{y}.png',
-        mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
+        mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 16, attribution:""});
         map.addLayer(mapbox,true);
+
+        mapbox.on("load", function() {
+
+          if (!started) {
+            started = true;
+
+            setTimeout(function() {
+              parent.postMessage("DONE!", "*");
+            }, 3000);
+
+
+          }
+
+        });
 
         var query="SELECT * FROM osm_atm_mad_iso";
 
