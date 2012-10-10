@@ -20,6 +20,8 @@
       var votes, map, started;
 
       function initialize() {
+        parent.postMessage("loaded", "*");
+
         map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
 
 
@@ -33,7 +35,7 @@
             started = true;
 
             setTimeout(function() {
-              parent.postMessage("DONE!", "*");
+              parent.postMessage("start", "*");
             }, 3000);
 
 

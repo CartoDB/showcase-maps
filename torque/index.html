@@ -23,6 +23,9 @@
     <script type="text/javascript">
       var gui;
       function initialize() {
+
+        parent.postMessage("loaded", "*");
+
         // initialise the google map
         var map = new google.maps.Map(document.getElementById('map_canvas'), {
           center:new google.maps.LatLng(30.95940879245423, -0.609375),
@@ -34,7 +37,7 @@
 
         google.maps.event.addListenerOnce(map, 'idle', function(){
           setTimeout(function() {
-            parent.postMessage("DONE!", "*");
+            parent.postMessage("start", "*");
           }, 1000);
         });
 

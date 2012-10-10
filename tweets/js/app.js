@@ -17,7 +17,7 @@ window.requestAnimFrame = (function(){
 function start() {
 
   setTimeout(function() {
-    parent.postMessage("DONE!", "*");
+    parent.postMessage("start", "*");
   }, 1000);
 
   (function animloop(){
@@ -38,6 +38,8 @@ function start() {
 }
 
 function initialize() {
+
+  parent.postMessage("loaded", "*");
 
   map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -92.98828125), 4);
 
