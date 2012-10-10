@@ -382,6 +382,8 @@ function updateCounters(data) {
 // Method to build the map
 function initMap() {
 
+  parent.postMessage("loaded", "*");
+
   var
   src             = document.getElementById('src'),
   subdomains      = [ 'a.', 'b.', 'c.' ],
@@ -495,7 +497,7 @@ function start() {
   progressLine.className = "fadeIn";
 
   setTimeout(function() {
-    parent.postMessage("DONE!", "*");
+    parent.postMessage("start", "*");
   }, 3000);
 
   loop();
