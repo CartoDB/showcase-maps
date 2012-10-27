@@ -384,7 +384,7 @@ function initMap() {
 
   setTimeout(function() {
     parent.postMessage("loaded", "*");
-  }, 10000);
+  }, 30000);
 
   var
   src             = document.getElementById('src'),
@@ -500,7 +500,7 @@ function start() {
 
   setTimeout(function() {
     parent.postMessage("start", "*");
-  }, 3000);
+  }, 33000);
 
   loop();
 }
