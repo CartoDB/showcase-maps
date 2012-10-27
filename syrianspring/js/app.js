@@ -382,9 +382,7 @@ function updateCounters(data) {
 // Method to build the map
 function initMap() {
 
-  setTimeout(function() {
-    parent.postMessage("loaded", "*");
-  }, 30000);
+  parent.postMessage("loaded", "*");
 
   var
   src             = document.getElementById('src'),
@@ -500,7 +498,7 @@ function start() {
 
   setTimeout(function() {
     parent.postMessage("start", "*");
-  }, 33000);
+  }, 3000);
 
   loop();
 }
