@@ -1,7 +1,8 @@
+var
 play         = true,
 conflictmaps,
 removeLayers = false,
-map,
+map          ,
 layers       = {},
 overlay      = null,
 playButton   = null,
