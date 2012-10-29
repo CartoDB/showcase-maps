@@ -1,6 +1,5 @@
-started = false;
-map = null;
-frames = [];
+var started = false;
+var map    = null;
 
 // shim layer with setTimeout fallback
 window.requestAnimFrame = (function(){
