@@ -2,7 +2,7 @@ var
 play         = true,
 conflictmaps,
 removeLayers = false,
-map          ,
+mapCanvas,
 layers       = {},
 overlay      = null,
 playButton   = null,
@@ -346,8 +346,8 @@ function toggleAnimation() {
   play = !play;
 
   if (removeLayers) {
-    map.removeLayerAt(2);
-    map.removeLayerAt(2);
+    mapCanvas.removeLayerAt(2);
+    mapCanvas.removeLayerAt(2);
     removeLayers = false;
   }
 
@@ -357,11 +357,11 @@ function toggleAnimation() {
 }
 
 function zoomIn() {
-  map.setZoom(map.getZoom() + 1);
+  mapCanvas.setZoom(mapCanvas.getZoom() + 1);
 }
 
 function zoomOut() {
-  map.setZoom(map.getZoom() - 1);
+  mapCanvas.setZoom(mapCanvas.getZoom() - 1);
 }
 
 function updateCounters(data) {
@@ -394,11 +394,11 @@ function initMap() {
   layers.childLayer      = new MM.Layer(new MM.TemplatedMapProvider(config.map.childTemplate));
 
   // Create the map with the base layer
-  map = new MM.Map(document.getElementById(config.map.id), layers.baseLayer);
-  map.setCenterZoom(location, config.map.zoom);
+  mapCanvas = new MM.Map(document.getElementById(config.map.id), layers.baseLayer);
+  mapCanvas.setCenterZoom(location, config.map.zoom);
 
   // Adds the intersection layer
-  map.insertLayerAt(1, layers.intersectsLayer);
+  mapCanvas.insertLayerAt(1, layers.intersectsLayer);
 
   conflictmaps = new ConflictMaps();
 
@@ -448,8 +448,8 @@ function renderLoop() {
     play = false;
     $("#play").removeClass("pause");
 
-    map.insertLayerAt(2, layers.totalLayer);
-    map.insertLayerAt(3, layers.childLayer);
+    mapCanvas.insertLayerAt(2, layers.totalLayer);
+    mapCanvas.insertLayerAt(3, layers.childLayer);
 
     removeLayers = true;
 
