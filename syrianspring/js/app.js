@@ -6,13 +6,13 @@ mapCanvas,
 layers       = {},
 overlay      = null,
 playButton   = null,
-progressLine = null;
-counters     = {};
+progressLine = null,
+counters     = {},
 
-totalCivilians = 0;
-totalChildren = 0;
+totalCivilians = 0,
+totalChildren = 0,
 
-cloudFrontURL = "http://d2c5ry9dy1ewvi.cloudfront.net";
+cloudFrontURL = "http://d2c5ry9dy1ewvi.cloudfront.net",
 vizzURL       = "http://vizz2.cartodb.com";
 
 var config = {
