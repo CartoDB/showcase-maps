@@ -413,7 +413,7 @@ function initMap() {
 // onDataLoaded callback
 function onDataLoaded() {
 
-  overlay  = new Overlay(map, conflictmaps);
+  overlay  = new Overlay(mapCanvas, conflictmaps);
   overlay.graph('graph')
 
   graph = document.getElementById('graph');
