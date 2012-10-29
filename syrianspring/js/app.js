@@ -457,7 +457,7 @@ function renderLoop() {
 
   }
 
-  overlay.draw(map);
+  overlay.draw(mapCanvas);
 }
 
 function loop() {
