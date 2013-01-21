@@ -42,7 +42,7 @@ function initialize() {
 
   map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -92.98828125), 4);
 
-  var mapboxUrl = 'http://{s}.tiles.mapbox.com/cartodb/map/map-ljbvg2xz/{z}/{x}/{y}.png',
+  var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-ljbvg2xz/{z}/{x}/{y}.png',
 
   mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 17, attribution:""});
   map.addLayer(mapbox,true);
