@@ -25,7 +25,7 @@
         map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(40.43714868233712, -3.6812782287597656), 14);
 
 
-        var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/saleiva.map-ri1pkhit/{z}/{x}/{y}.png',
+        var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-ksqx88oi/{z}/{x}/{y}.png',
         mapbox = new L.TileLayer(mapboxUrl, {maxZoom: 16, attribution:""});
         map.addLayer(mapbox,true);
 
