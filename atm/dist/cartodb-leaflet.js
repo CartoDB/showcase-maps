@@ -22,7 +22,7 @@ if (typeof(L.CartoDBLayer) === "undefined") {
       query:          "SELECT * FROM {{table_name}}",
       opacity:        0.99,
       auto_bound:     false,
-      attribution:    "CartoDB",
+      attribution:    "",
       debug:          false,
       visible:        true,
       added:          false,
@@ -114,7 +114,7 @@ if (typeof(L.CartoDBLayer) === "undefined") {
         if (this.options.debug) {
           throw('the layer is not still added to the map');
         } else { return }
-      }   
+      }
 
       if (isNaN(opacity) || opacity>1 || opacity<0) {
         if (this.options.debug) {
@@ -767,7 +767,7 @@ if (typeof(L.CartoDBLayer) === "undefined") {
           if (self.interaction)
             self.interaction.remove();
 
-          if (self.options.debug) 
+          if (self.options.debug)
             throw('There is an error in your query or your interaction parameter');
 
           self.fire("layererror", msg);
