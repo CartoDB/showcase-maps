@@ -33,7 +33,7 @@ function start() {
    d += elapsed;
 
     try {
-      if (d > 100) {
+      if (d > 70) {
         d = 0;
         map.panBy([1, 0]);
       }
