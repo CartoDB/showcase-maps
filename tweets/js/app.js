@@ -40,7 +40,7 @@ function initialize() {
 
   parent.postMessage("loaded", "*");
 
-  map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -115.98828125), 4);
+  map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -130.98828125), 4);
 
   var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-ljbvg2xz/{z}/{x}/{y}.png',
 
