@@ -25,10 +25,10 @@ function start() {
 
     try {
 
-      map.panBy([.1, 0]);
+      map.panBy([1, 0]);
 
     } catch(e) {
-
+      console.log(e);
     }
 
   })();
