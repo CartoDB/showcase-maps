@@ -27,7 +27,6 @@ function start() {
 
    var timeNow = new Date().getTime();
 
-
    requestAnimFrame(animloop);
    elapsed = timeNow - lastTime;
    d += elapsed;
