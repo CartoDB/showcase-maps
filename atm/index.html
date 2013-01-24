@@ -19,6 +19,18 @@
     <script type="text/javascript">
       var votes, map, started;
 
+      // shim layer with setTimeout fallback
+      window.requestAnimFrame = (function(){
+        return  window.requestAnimationFrame       ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame     ||
+        function( callback ){
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+
       function initialize() {
         parent.postMessage("loaded", "*");
 
@@ -37,6 +49,19 @@
               parent.postMessage("start", "*");
             }, 3000);
 
+  (function animloop(){
+
+    requestAnimFrame(animloop);
+
+    try {
+
+      map.panBy([.1, 0]);
+
+    } catch(e) {
+
+    }
+
+  })();
 
           }
 
