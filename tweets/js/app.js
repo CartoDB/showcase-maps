@@ -13,6 +13,10 @@ window.requestAnimFrame = (function(){
   };
 })();
 
+var lastTime = 0;
+var elapsed = 0;
+var d = 0;
+
 function start() {
 
   setTimeout(function() {
@@ -21,15 +25,23 @@ function start() {
 
   (function animloop(){
 
-    requestAnimFrame(animloop);
+   var timeNow = new Date().getTime();
+
+
+   requestAnimFrame(animloop);
+   elapsed = timeNow - lastTime;
+   d += elapsed;
 
     try {
-
-      map.panBy([1, 0]);
-
+      if (d > 100) {
+        d = 0;
+        map.panBy([1, 0]);
+      }
     } catch(e) {
       console.log(e);
     }
+
+    lastTime = timeNow;
 
   })();
 
@@ -40,7 +52,7 @@ function initialize() {
 
   parent.postMessage("loaded", "*");
 
-  map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -130.98828125), 4);
+  map = new L.Map('map_canvas', { zoomControl: false }).setView(new L.LatLng(41.31082388091818, -99.98828125), 4);
 
   var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-ljbvg2xz/{z}/{x}/{y}.png',
 
