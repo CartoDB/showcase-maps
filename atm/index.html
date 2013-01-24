@@ -31,6 +31,24 @@
         };
       })();
 
+      function start() {
+
+        (function animloop(){
+
+          requestAnimFrame(animloop);
+
+          try {
+
+            map.panBy([.1, 0]);
+
+          } catch(e) {
+
+          }
+
+        })();
+
+      }
+
       function initialize() {
         parent.postMessage("loaded", "*");
 
@@ -47,21 +65,13 @@
 
             setTimeout(function() {
               parent.postMessage("start", "*");
+
+              start();
+
+
+
             }, 3000);
 
-  (function animloop(){
-
-    requestAnimFrame(animloop);
-
-    try {
-
-      map.panBy([.1, 0]);
-
-    } catch(e) {
-
-    }
-
-  })();
 
           }
 
