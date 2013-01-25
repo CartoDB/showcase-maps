@@ -34,7 +34,7 @@ function start() {
     try {
       if (d > 70) {
         d = 0;
-        map.panBy([1, 0]);
+        //map.panBy([1, 0]);
       }
     } catch(e) {
       console.log(e);
