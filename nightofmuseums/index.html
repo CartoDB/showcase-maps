@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OSM Buildings + CartoDB : Long night of museums Berlin 2014</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+html, body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#map {
+  height: 100%;
+}
+</style>
+<link rel="stylesheet" href="leaflet-0.7/leaflet.css">
+<script src="leaflet-0.7/leaflet-src.js"></script>
+<script src="OSMBuildings-Leaflet.js"></script>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+var map = new L.Map('map').setView([52.51881, 13.40111], 15);
+//new L.TileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', { maxNativeZoom: 19, maxZoom: 21 }).addTo(map);
+new L.TileLayer('https://1.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
+
+var osmb = new OSMBuildings(map)
+  .setStyle({ shadows: false })
+  .each(function(item) {
+    // parse misc osm tags from hastore
+    if (item.properties.other_tags) {
+      item.properties.other_tags.replace(/,?"([^"]+)"=>"([^"]*)"/g, function(m, k, v) {
+        item.properties[k] = v;
+      });
+      delete item.properties.other_tags;
+    }
+
+// if (item.properties.min_height) {
+//   console.log(item.properties.min_height);
+// }
+    
+    // highlight buildings w/ event
+    if (item.properties.has_event) {
+      item.properties.color = '#ffcc66';
+      item.properties.roofColor = '#cc9933';
+      item.properties.height = Math.max(10, item.properties.height);
+    } else {
+      // make other buildings flat
+      //delete item.properties.height;
+      item.properties.color = 'rgba(96, 96, 96, 0.65)';
+      item.properties.roofColor = 'rgba(32, 32, 32, 0.85)';
+    }
+  })
+  .loadData(
+    'http://osmbuildings.cartodb.com/api/v2/sql?q='+
+    'SELECT a.cartodb_id AS id, 5 AS height, ST_AsText(a.the_geom) AS the_geom, b.cartodb_id>0 AS has_event, a.other_tags '+
+    'FROM berlin_filtered AS a LEFT JOIN lndm AS b ON ST_Intersects(a.the_geom, b.the_geom) '+
+    'WHERE a.the_geom %26%26 ST_SetSRID(ST_MakeBox2D(ST_Point({w},{s}), ST_Point({e},{n})), 4326) '+
+//    'AND b.cartodb_id>0'+
+    '&format=geojson'
+  );
+
+//  'http://osmbuildings.cartodb.com/api/v2/sql?q='+
+//  'SELECT a.cartodb_id AS id, 50 AS height, ST_AsText(a.the_geom) AS the_geom, b.name, b.address, b.cartodb_id>0 AS has_event '+
+//  'FROM berlin_filtered AS a LEFT JOIN lndm AS b ON ST_Intersects(a.the_geom, b.the_geom) '+
+//  'WHERE a.the_geom %26%26 ST_SetSRID(ST_MakeBox2D(ST_Point({w},{s}), ST_Point({e},{n})), 4326)'+
+//  '&format=geojson'
+</script>
+</body>
+</html>
