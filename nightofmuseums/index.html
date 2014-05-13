@@ -3,6 +3,7 @@
 <head>
 <title>OSM Buildings + CartoDB : Long night of museums Berlin 2014</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<!--link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css"-->
 <style type="text/css">
 html, body {
   border: 0;
@@ -19,14 +20,17 @@ html, body {
 <link rel="stylesheet" href="leaflet-0.7/leaflet.css">
 <script src="leaflet-0.7/leaflet-src.js"></script>
 <script src="OSMBuildings-Leaflet.js"></script>
+<!--script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script-->
 </head>
 
 <body>
 <div id="map"></div>
 <script>
 var map = new L.Map('map').setView([52.51881, 13.40111], 15);
-//new L.TileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg', { maxNativeZoom: 19, maxZoom: 21 }).addTo(map);
-new L.TileLayer('https://1.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
+//L.tileLayer('https://1.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
+L.tileLayer('http://1.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@f32ae618@64ba0ab27375eec56278090fcb6aec3c:1399992526294.95/{z}/{x}/{y}.png', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
+
+//cartodb.createVis('map', 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json', { share: true, title: true, description: true, search: true }).done(function(vis, layers) {});
 
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
@@ -42,7 +46,7 @@ var osmb = new OSMBuildings(map)
 // if (item.properties.min_height) {
 //   console.log(item.properties.min_height);
 // }
-    
+
     // highlight buildings w/ event
     if (item.properties.has_event) {
       item.properties.color = '#ffcc66';
