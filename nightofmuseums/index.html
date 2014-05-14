@@ -47,8 +47,8 @@ html, body {
 }
 
 </style>
-<link rel="stylesheet" href="leaflet-0.7/leaflet.css">
-<script src="leaflet-0.7/leaflet-src.js"></script>
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 <script src="OSMBuildings-Leaflet.js"></script>
 <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 </head>
@@ -57,7 +57,10 @@ html, body {
 <div id="map"></div>
 <div id="mamufas">
   <h1>Lange Nacht Der Museen Berlin 2014</h1>
-  <h4>Museen von spät bis früh — das ist die Lange Nacht der Museen. Vor 17 Jahren in Berlin erfunden, lädt sie in diesem Jahr zum ersten Mal im Mai zum Entdecken, Schlendern, Austauschen und Erleben ein. 80 Türen stehen am 17. Mai 2014 von 18 bis 2 Uhr offen — sie führen in weltberühmte Sammlungen, zu Berliner Originalen, unbekannten Kulturen oder (einst) heißgeliebten Dingen. </h4>
+  <h4>Museen von spät bis früh — das ist die Lange Nacht der Museen. Vor 17 Jahren in Berlin erfunden,
+      lädt sie in diesem Jahr zum ersten Mal im Mai zum Entdecken, Schlendern, Austauschen und Erleben ein.
+      80 Türen stehen am 17. Mai 2014 von 18 bis 2 Uhr offen — sie führen in weltberühmte Sammlungen,
+      zu Berliner Originalen, unbekannten Kulturen oder (einst) heißgeliebten Dingen.</h4>
 </div>
 <script>
 var map = new L.Map('map', {
@@ -72,26 +75,18 @@ new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
 //L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
 
-cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json')
- .addTo(map)
- .on('done', function(layer) {
-  layer.setInteraction(true);
-
-  layer.on('featureOver', function(e, pos, latlng, data) {
-    cartodb.log.log(e, pos, latlng, data);
-  });
-
-  layer.on('error', function(err) {
-    cartodb.log.log('error: ' + err);
-  });
-}).on('error', function() {
-  cartodb.log.log("some error occurred");
-});
+cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map);
+// .on('done', function(layer) {
+//    layer.setInteraction(true);
+//    layer.on('featureOver', function(e, pos, latlng, data) {
+//      cartodb.log.log(e, pos, latlng, data);
+//    });
+// });
 
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
   .each(function(item) {
-    // parse misc osm tags from hastore
+    // parse misc OSM tags from hstore
     if (item.properties.other_tags) {
       item.properties.other_tags.replace(/,?"([^"]+)"=>"([^"]*)"/g, function(m, k, v) {
         item.properties[k] = v;
@@ -99,15 +94,13 @@ var osmb = new OSMBuildings(map)
       delete item.properties.other_tags;
     }
 
-
-    // highlight buildings w/ event
+    // highlight buildings with event
     if (item.properties.has_event) {
       item.properties.color = '#ffcc66';
       item.properties.roofColor = '#cc9933';
-      item.properties.height = Math.max(20, item.properties.height);
+      item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
     } else {
-      // make other buildings flat
-      //delete item.properties.height;
+      // delete item.properties.height; // makes other buildings flat
       item.properties.color = 'rgba(47, 57, 64, 0.80)';
       item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
     }
@@ -120,7 +113,6 @@ var osmb = new OSMBuildings(map)
 //    'AND b.cartodb_id>0'+
     '&format=geojson'
   );
-
 </script>
 </body>
 </html>
