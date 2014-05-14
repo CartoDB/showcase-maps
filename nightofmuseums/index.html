@@ -81,25 +81,14 @@ cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
   .each(function(item) {
-    // parse misc OSM tags from hstore
-    if (item.properties.other_tags) {
-      item.properties.other_tags.replace(/,?"([^"]+)"=>"([^"]*)"/g, function(m, k, v) {
-        item.properties[k] = v;
-      });
-      delete item.properties.other_tags;
-    }
-
+    item.properties = parseHstore(item.properties);
+    
     // highlight buildings with event
     if (item.properties.has_event) {
       item.properties.color = '#ffcc66';
       item.properties.roofColor = '#cc9933';
       item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
     } else {
-      if (item.properties.height < 10) {
-        item.properties.color = 'rgba(47, 57, 64, 0.80)';
-        item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
-        return true
-      }
       // delete item.properties.height; // makes other buildings flat
       item.properties.color = 'rgba(47, 57, 64, 0.80)';
       item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
@@ -113,6 +102,80 @@ var osmb = new OSMBuildings(map)
 //    'AND b.cartodb_id>0'+
     '&format=geojson'
   );
+
+
+function parseHstore(properties) {
+  if (properties.other_tags) {
+    properties.other_tags.replace(/,?"([^"]+)"=>"([^"]*)"/g, function(m, k, v) {
+      properties[k] = v;
+    });
+    delete properties.other_tags;
+  }
+  return alignProperties(properties);
+}
+
+// OSM processing helpers  
+
+var  
+  YARD_TO_METER = 0.9144,
+  FOOT_TO_METER = 0.3048,
+  INCH_TO_METER = 0.0254,
+  METERS_PER_LEVEL = 3;
+
+function toMeters(str) {
+  str = '' + str;
+  var value = parseFloat(str);
+  if (value === str) {
+    return value <<0;
+  }
+  if (~str.indexOf('m')) {
+    return value <<0;
+  }
+  if (~str.indexOf('yd')) {
+    return value*this.YARD_TO_METER <<0;
+  }
+  if (~str.indexOf('ft')) {
+    return value*this.FOOT_TO_METER <<0;
+  }
+  if (~str.indexOf('\'')) {
+    var parts = str.split('\'');
+    var res = parts[0]*this.FOOT_TO_METER + parts[1]*this.INCH_TO_METER;
+    return res <<0;
+  }
+  return value <<0;
+};
+
+function alignProperties(properties) {
+  if (properties.height) {
+    properties.height = toMeters(properties.height);
+  }
+  if (!properties.height && properties['building:height']) {
+    properties.height = toMeters(properties['building:height']);
+  }
+
+  if (!properties.height && properties.levels) {
+    properties.height = properties.levels*METERS_PER_LEVEL <<0;
+  }
+  if (!properties.height && properties['building:levels']) {
+    properties.height = properties['building:levels']*METERS_PER_LEVEL <<0;
+  }
+
+  if (properties.min_height) {
+    properties.minHeight = toMeters(properties.min_height);
+  }
+  if (!properties.minHeight && properties['building:min_height']) {
+    properties.minHeight = toMeters(properties['building:min_height']);
+  }
+
+  if (!properties.minHeight && properties.min_level) {
+    properties.minHeight = properties.min_level*METERS_PER_LEVEL <<0;
+  }
+  if (!properties.minHeight && properties['building:min_level']) {
+    properties.minHeight = properties['building:min_level']*METERS_PER_LEVEL <<0;
+  }
+
+  return properties;
+}
 
 </script>
 </body>
