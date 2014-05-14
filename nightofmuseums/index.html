@@ -93,20 +93,19 @@ var osmb = new OSMBuildings(map)
       delete item.properties.other_tags;
     }
 
+    item.properties.color = 'rgba(47, 57, 64, 0.80)';
+    item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
+
     // highlight buildings with event
     if (item.properties.has_event) {
       item.properties.color = '#ffcc66';
       item.properties.roofColor = '#cc9933';
       item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
-    } else {
-      if (item.properties.height < 10) {
-        item.properties.color = 'rgba(47, 57, 64, 0.80)';
-        item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
-        return true
-      }
-      // delete item.properties.height; // makes other buildings flat
+    } 
+    if (item.properties.height < 10) {
       item.properties.color = 'rgba(47, 57, 64, 0.80)';
       item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
+      return true
     }
   })
   .loadData(
