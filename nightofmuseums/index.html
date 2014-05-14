@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>OSM Buildings + CartoDB : Long night of museums Berlin 2014</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <!--link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css"-->
 <style type="text/css">
@@ -49,7 +50,7 @@ html, body {
 <link rel="stylesheet" href="leaflet-0.7/leaflet.css">
 <script src="leaflet-0.7/leaflet-src.js"></script>
 <script src="OSMBuildings-Leaflet.js"></script>
-<!--script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script-->
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 </head>
 
 <body>
@@ -59,7 +60,7 @@ html, body {
   <h4>Museen von spät bis früh — das ist die Lange Nacht der Museen. Vor 17 Jahren in Berlin erfunden, lädt sie in diesem Jahr zum ersten Mal im Mai zum Entdecken, Schlendern, Austauschen und Erleben ein. 80 Türen stehen am 17. Mai 2014 von 18 bis 2 Uhr offen — sie führen in weltberühmte Sammlungen, zu Berliner Originalen, unbekannten Kulturen oder (einst) heißgeliebten Dingen. </h4>
 </div>
 <script>
-var map = new L.Map('map',{
+var map = new L.Map('map', {
   center: [52.51881, 13.40111],
   zoom: 15,
   minZoom: 15,
@@ -68,10 +69,24 @@ var map = new L.Map('map',{
 });
 
 new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
-//L.tileLayer('https://1.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
-L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
 
-//cartodb.createVis('map', 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json', { share: true, title: true, description: true, search: true }).done(function(vis, layers) {});
+//L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
+
+cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json')
+ .addTo(map)
+ .on('done', function(layer) {
+  layer.setInteraction(true);
+
+  layer.on('featureOver', function(e, pos, latlng, data) {
+    cartodb.log.log(e, pos, latlng, data);
+  });
+
+  layer.on('error', function(err) {
+    cartodb.log.log('error: ' + err);
+  });
+}).on('error', function() {
+  cartodb.log.log("some error occurred");
+});
 
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
@@ -84,9 +99,6 @@ var osmb = new OSMBuildings(map)
       delete item.properties.other_tags;
     }
 
-// if (item.properties.min_height) {
-//   console.log(item.properties.min_height);
-// }
 
     // highlight buildings w/ event
     if (item.properties.has_event) {
@@ -109,11 +121,6 @@ var osmb = new OSMBuildings(map)
     '&format=geojson'
   );
 
-//  'http://osmbuildings.cartodb.com/api/v2/sql?q='+
-//  'SELECT a.cartodb_id AS id, 50 AS height, ST_AsText(a.the_geom) AS the_geom, b.name, b.address, b.cartodb_id>0 AS has_event '+
-//  'FROM berlin_filtered AS a LEFT JOIN lndm AS b ON ST_Intersects(a.the_geom, b.the_geom) '+
-//  'WHERE a.the_geom %26%26 ST_SetSRID(ST_MakeBox2D(ST_Point({w},{s}), ST_Point({e},{n})), 4326)'+
-//  '&format=geojson'
 </script>
 </body>
 </html>
