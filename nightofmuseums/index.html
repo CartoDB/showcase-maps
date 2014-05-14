@@ -96,6 +96,9 @@ var osmb = new OSMBuildings(map)
       item.properties.roofColor = '#cc9933';
       item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
     } else {
+      if (item.properties.height < 10) {
+        return false
+      }
       // delete item.properties.height; // makes other buildings flat
       item.properties.color = 'rgba(47, 57, 64, 0.80)';
       item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
@@ -109,6 +112,7 @@ var osmb = new OSMBuildings(map)
 //    'AND b.cartodb_id>0'+
     '&format=geojson'
   );
+
 </script>
 </body>
 </html>
