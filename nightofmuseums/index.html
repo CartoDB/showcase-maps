@@ -41,6 +41,7 @@ html, body {
   font-size: 14px;
   font-weight: normal;
   line-height: 21px;
+  max-width: 1150px;
   margin: 7px 30px 7px 106px;
   color: rgba(255,255,255,0.8)
 }
@@ -71,13 +72,11 @@ var map = new L.Map('map', {
 
 new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
-cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map);
-// .on('done', function(layer) {
-//    layer.setInteraction(true);
-//    layer.on('featureOver', function(e, pos, latlng, data) {
-//      cartodb.log.log(e, pos, latlng, data);
-//    });
-// });
+cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map)
+  .on('done', function(layer) {
+    //Remove layer with labels
+     layer.getSubLayer(2).hide()
+  });
 
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
@@ -97,7 +96,9 @@ var osmb = new OSMBuildings(map)
       item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
     } else {
       if (item.properties.height < 10) {
-        return false
+        item.properties.color = 'rgba(47, 57, 64, 0.80)';
+        item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
+        return true
       }
       // delete item.properties.height; // makes other buildings flat
       item.properties.color = 'rgba(47, 57, 64, 0.80)';
