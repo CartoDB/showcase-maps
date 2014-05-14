@@ -73,8 +73,6 @@ var map = new L.Map('map', {
 
 new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 
-//L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
-
 cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map);
 // .on('done', function(layer) {
 //    layer.setInteraction(true);
