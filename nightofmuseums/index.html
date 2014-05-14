@@ -24,7 +24,6 @@ html, body {
   right: 0px;
   width: 100%;
   color: #fff;
-  pointer-events:none;
   background: rgba(0,0,0,0.5) url('img/icon.png') 14px 20px no-repeat;
   padding: 15px;
 }
@@ -46,6 +45,14 @@ html, body {
   color: rgba(255,255,255,0.8)
 }
 
+#mamufas h4 a {
+  color: #FFF;
+  }
+
+.leaflet-control-zoom{
+  bottom: 40px;
+}
+
 </style>
 <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
 <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
@@ -56,10 +63,7 @@ html, body {
 <div id="map"></div>
 <div id="mamufas">
   <h1>Lange Nacht Der Museen Berlin 2014</h1>
-  <h4>Museen von spät bis früh — das ist die Lange Nacht der Museen. Vor 17 Jahren in Berlin erfunden,
-      lädt sie in diesem Jahr zum ersten Mal im Mai zum Entdecken, Schlendern, Austauschen und Erleben ein.
-      80 Türen stehen am 17. Mai 2014 von 18 bis 2 Uhr offen — sie führen in weltberühmte Sammlungen,
-      zu Berliner Originalen, unbekannten Kulturen oder (einst) heißgeliebten Dingen.</h4>
+  <h4>Museums will be open at night, that's the Lange Nacht der Museen. Started 17 years ago this year you will be able to enjoy, discover and experience the Berlin Museums in May for the first time. 80 doors will be open and welcome you on May 17th from 4pm to 2am and will lead you to world renowned collections, original pieces, unknown cultures and other amazing stuff. Discover all the places on this map created with <a href="http://cartodb.com">CartoDB</a> and <a href="http://osmbuildings.org">OSMBuildings</a></h4>
 </div>
 <script>
 var map = new L.Map('map', {
