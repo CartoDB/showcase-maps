@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OSM Buildings + CartoDB : Long night of museums Berlin 2014</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+html, body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#map {
+  height: 100%;
+  background-color: #384047;
+}
+#mamufas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  color: #fff;
+  pointer-events:none;
+  background: rgba(0,0,0,0.5) url('img/icon.png') 14px 20px no-repeat;
+  padding: 15px;
+}
+
+#mamufas h1 {
+  font-family: Helvetica, Arial, Sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+  margin: 6px 0 0 106px;
+}
+
+#mamufas h4 {
+  font-family: Helvetica, Arial, Sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 21px;
+  max-width: 1150px;
+  margin: 7px 30px 7px 106px;
+  color: rgba(255,255,255,0.8)
+}
+
+</style>
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+<script src="OSMBuildings-Leaflet.js"></script>
+</head>
+
+<body>
+<div id="map"></div>
+<div id="mamufas">
+  <h1>Lange Nacht Der Museen Berlin 2014</h1>
+  <h4>Museen von spät bis früh — das ist die Lange Nacht der Museen. Vor 17 Jahren in Berlin erfunden,
+      lädt sie in diesem Jahr zum ersten Mal im Mai zum Entdecken, Schlendern, Austauschen und Erleben ein.
+      80 Türen stehen am 17. Mai 2014 von 18 bis 2 Uhr offen — sie führen in weltberühmte Sammlungen,
+      zu Berliner Originalen, unbekannten Kulturen oder (einst) heißgeliebten Dingen.</h4>
+</div>
+<script>
+var map = new L.Map('map', {
+  center: [52.51881, 13.40111],
+  zoom: 15,
+  minZoom: 15,
+  maxZoom: 17,
+  zoomControl: false
+});
+
+new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
+
+cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map)
+  .on('done', function(layer) {
+    //Remove layer with labels
+     layer.getSubLayer(2).hide()
+  });
+
+var osmb = new OSMBuildings(map)
+  .setStyle({ shadows: false })
+  .each(function(item) {
+    // parse misc OSM tags from hstore
+    if (item.properties.other_tags) {
+      item.properties.other_tags.replace(/,?"([^"]+)"=>"([^"]*)"/g, function(m, k, v) {
+        item.properties[k] = v;
+      });
+      delete item.properties.other_tags;
+    }
+
+    // highlight buildings with event
+    if (item.properties.has_event) {
+      item.properties.color = '#ffcc66';
+      item.properties.roofColor = '#cc9933';
+      item.properties.height = Math.max(20, item.properties.height); // ensure a minimum height of 20
+    } else {
+      if (item.properties.height < 10) {
+        item.properties.color = 'rgba(47, 57, 64, 0.80)';
+        item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
+        return true
+      }
+      // delete item.properties.height; // makes other buildings flat
+      item.properties.color = 'rgba(47, 57, 64, 0.80)';
+      item.properties.roofColor = 'rgba(83, 100, 113, 0.80)';
+    }
+  })
+  .loadData(
+    'http://osmbuildings.cartodb.com/api/v2/sql?q='+
+    'SELECT a.cartodb_id AS id, 5 AS height, ST_AsText(a.the_geom) AS the_geom, b.cartodb_id>0 AS has_event, a.other_tags '+
+    'FROM berlin_filtered AS a LEFT JOIN lndm AS b ON ST_Intersects(a.the_geom, b.the_geom) '+
+    'WHERE a.the_geom %26%26 ST_SetSRID(ST_MakeBox2D(ST_Point({w},{s}), ST_Point({e},{n})), 4326) '+
+//    'AND b.cartodb_id>0'+
+    '&format=geojson'
+  );
+
+</script>
+</body>
+</html>
