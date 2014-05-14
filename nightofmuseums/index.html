@@ -46,8 +46,8 @@ html, body {
 }
 
 </style>
-<link rel="stylesheet" href="leaflet-0.7/leaflet.css">
-<script src="leaflet-0.7/leaflet-src.js"></script>
+<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css">
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
 <script src="OSMBuildings-Leaflet.js"></script>
 <!--script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script-->
 </head>
@@ -69,9 +69,9 @@ var map = new L.Map('map',{
 
 new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 //L.tileLayer('https://1.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.night.grey/{z}/{x}/{y}/256/png8?lg=eng&token=A7tBPacePg9Mj_zghvKt9Q&app_id=KuYppsdXZznpffJsKT24', { maxNativeZoom: 20, maxZoom: 21 }).addTo(map);
-L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
+//L.tileLayer('http://3.ashbu.cartocdn.com/saleiva/api/v1/map/saleiva@2766fda3@051553ab1b6c394b4ae6ad4831a3611f:1400005116762.3/{z}/{x}/{y}.png').addTo(map);
 
-//cartodb.createVis('map', 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json', { share: true, title: true, description: true, search: true }).done(function(vis, layers) {});
+cartodb.createLayer(map, 'http://saleiva.cartodb.com/api/v2/viz/15f8e4ba-dab0-11e3-be35-0e230854a1cb/viz.json').addTo(map);
 
 var osmb = new OSMBuildings(map)
   .setStyle({ shadows: false })
